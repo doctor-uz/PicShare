@@ -12,6 +12,8 @@ dotenv.config();
 app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
+
+app.get("/health", (_req, res) => res.status(200).send("OK"));
 app.use("/posts", postRoutes);
 app.use("/user", userRoutes);
 
@@ -23,8 +25,8 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() =>
-    app.listen(PORT, () =>
-      console.log(`Server running on PORT: http: //localehost:`, PORT),
+    app.listen(PORT, "0.0.0.0", () =>
+      console.log(`API listening on http://0.0.0.0:`, PORT),
     ),
   )
   .catch((error) => console.log(`${error} did not connect`));
