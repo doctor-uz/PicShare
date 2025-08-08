@@ -19,16 +19,35 @@ app.use("/user", userRoutes);
 
 const PORT = process.env.PORT || 5000;
 
+if (!process.env.CONNECTION_URL) {
+  console.error("❌ Missing CONNECTION_URL env var");
+}
+
 mongoose
   .connect(process.env.CONNECTION_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() =>
-    app.listen(PORT, "0.0.0.0", () =>
-      console.log(`API listening on http://0.0.0.0:`, PORT),
-    ),
-  )
-  .catch((error) => console.log(`${error} did not connect`));
+  .then(() => {
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`✅ API listening on http://0.0.0.0:${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error("❌ Mongo connection error:", error?.message || error);
+    process.exit(1); // fail fast so Render restarts and shows the error
+  });
+
+// mongoose
+//   .connect(process.env.CONNECTION_URL, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() =>
+//     app.listen(PORT, "0.0.0.0", () =>
+//       console.log(`API listening on http://0.0.0.0:`, PORT),
+//     ),
+//   )
+//   .catch((error) => console.log(`${error} did not connect`));
 
 mongoose.set("useFindAndModify", false);
