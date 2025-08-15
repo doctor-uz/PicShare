@@ -27,8 +27,8 @@ Users can register manually or sign in with **Google Auth**, upload images, add 
 **Frontend:**
 
 - React
-- Redux (or Context API, if applicable)
-- Material UI / Tailwind CSS (adjust if different)
+- Redux
+- Material UI
 
 **Backend:**
 
@@ -39,7 +39,7 @@ Users can register manually or sign in with **Google Auth**, upload images, add 
 **Authentication:**
 
 - Google OAuth 2.0
-- JWT (JSON Web Token) for session management
+- JWT
 
 ---
 
